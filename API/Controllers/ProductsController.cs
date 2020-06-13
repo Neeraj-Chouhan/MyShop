@@ -60,7 +60,7 @@ namespace API.Controllers
             var products = await _productRepo.ListAsync(spec);
 
             var Data = _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDTO>>(products);
-            return Ok( new Pagination<ProductDTO>(ProductParams.PageIndex,ProductParams.PageSize,totalItems.Result,Data));
+            return Ok( new Pagination<ProductDTO>(ProductParams.pageSize,ProductParams.pageIndex,totalItems.Result,Data));
         }
 
         [HttpGet("{id}")]

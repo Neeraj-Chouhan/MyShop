@@ -3,11 +3,11 @@ namespace Core.Specifications
     public class ProductSpecParam
     {
         private int MaxPageSize = 50;
-        public int PageIndex = 1;
+        public int pageIndex {get;set;}
 
         private int _pageSize = 6;
 
-        public int PageSize
+        public int pageSize
         {
 
             get=>_pageSize;
