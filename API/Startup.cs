@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 
 namespace API
 {
@@ -28,12 +29,22 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository,ProductRepository>();
+            services.AddScoped<IBasketRepository,BasketRepository>();
             services.AddScoped(typeof(IGenericRepository<>),(typeof(GenericRepository<>)));
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x=>x.UseSqlite(_Configuration.GetConnectionString("DefaultConnection")));
+
+             services.AddSingleton<IConnectionMultiplexer>(c =>{
+           
+             var configuration = ConfigurationOptions.Parse(_Configuration.GetConnectionString("Redis"),true);
+             
+             return ConnectionMultiplexer.Connect(configuration);
+
+            });
+
             services.AddCors(Opts=>{
-                
+
                 Opts.AddPolicy("CorsPolicy",policy=>{
 
                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");

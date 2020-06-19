@@ -9,7 +9,7 @@
      
      
         <div class="btn-group">
-          <button type="button" class="btn btn-outline-secondary fa fa-shopping-cart mr-2"></button>
+          <button (click)="addItemTobasket()" type="button" class="btn btn-outline-secondary fa fa-shopping-cart mr-2" ></button>
           <button type="button" routerLink="/shop/{{product.id}}" routerLinkActive="router-link-active"  class="btn btn-outline-secondary">View</button>
         </div> 
         
